@@ -1,19 +1,20 @@
-const api = "https://api.stackexchange.com/2.2";
-const questions = `${api}/questions?fromdate=1613779200&todate=1614384000&order=desc&sort=creation&tagged=python&site=stackoverflow`;
-
 const getTitles = (json) => {
-  let ul = document.getElementById("questionList");
+  let div = document.getElementById(
+    "questionListContainer"
+  );
+  let ul = document.createElement("ul");
+  ul.id = "questionList";
 
   for (let i = 0; i < json.items.length; i++) {
     //html elements
-    let li = document.createElement("button");
+    let button = document.createElement("button");
     let divContent = document.createElement("div");
     let pContent = document.createElement("p");
 
     //div attributes + onclick function
     divContent.id = i;
     divContent.style.display = "none";
-    li.onclick = function () {
+    button.onclick = function () {
       if (divContent.style.display === "block") {
         divContent.style.display = "none";
       } else {
@@ -22,7 +23,7 @@ const getTitles = (json) => {
     };
 
     //setup list buttons
-    li.appendChild(
+    button.appendChild(
       document.createTextNode(
         `${
           json.items[i].title
@@ -39,14 +40,31 @@ const getTitles = (json) => {
 
     divContent.appendChild(pContent);
 
-    ul.appendChild(li);
+    ul.appendChild(button);
     ul.appendChild(divContent);
+  }
+
+  div.appendChild(ul);
+};
+
+const deletePrevious = () => {
+  let list = document.getElementById("questionList");
+
+  if (list != null) {
+    list.remove();
   }
 };
 
 const getResponse = async () => {
+  const tag = document.getElementById("tag").value;
+  const api = "https://api.stackexchange.com/2.2";
+  const questions = `${api}/questions?fromdate=1613779200&todate=1614384000&order=desc&sort=creation&tagged=${tag}&site=stackoverflow`;
+
   const myResponse = await fetch(questions);
   const json = await myResponse.json();
+
+  deletePrevious();
+
   console.log(json);
   getTitles(json);
 };
