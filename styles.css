@@ -1,23 +1,33 @@
-.collapsible {
-  background-color: #777;
-  color: white;
-  cursor: pointer;
-  padding: 18px;
+.my-button {
   width: 100%;
-  border: none;
-  text-align: left;
-  outline: none;
-  font-size: 15px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  font-size: 20px;
 }
 
-.active,
-.collapsible:hover {
-  background-color: #555;
+.submit-button {
+  float: right;
+  width: 30%;
+  height: 38px;
+  border-radius: 0.25rem;
+  margin-bottom: 15px;
 }
 
-.content {
-  padding: 0 18px;
-  display: none;
-  overflow: hidden;
-  background-color: #f1f1f1;
+.list-padding {
+  padding-left: 0px;
+}
+
+.highlight:hover {
+  background-color: rgb(153, 153, 153);
+}
+
+.container {
+  margin-left: 20%;
+  width: 60%;
+}
+
+.input-margin {
+  width: 70%;
+  float: left;
+  margin-bottom: 15px;
 }
