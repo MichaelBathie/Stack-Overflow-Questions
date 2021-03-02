@@ -129,7 +129,6 @@ const getResponse = async () => {
   console.log(topVotedjson);
 
   const recent = `https://api.stackexchange.com/2.2/questions?page=1&pagesize=10&fromdate=${weekAgo}&order=desc&sort=creation&tagged=${tag}&site=stackoverflow&filter=!*PBR8nclYi)J1Y.yEkh5DVscPK_BbQgKnuB)FPIQtKjQxarST`;
-  //`${api}/questions?fromdate=1613779200&todate=1614384000&order=desc&sort=creation&tagged=${tag}&site=stackoverflow&filter=!m)ASvzmwfr403f*F5dU1)8hbeB3Kgkc8rhKafuMzR-Es.)4fbDi5D6gX`;
   let recentResponse = await fetch(recent);
   let recentjson = await recentResponse.json();
   console.log(recentjson);
