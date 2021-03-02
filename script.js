@@ -1,3 +1,4 @@
+//retrieve and display all of the needed data
 const getData = (items) => {
   let div = document.getElementById("questionListContainer");
   let ul = document.createElement("ul");
@@ -43,6 +44,7 @@ const getData = (items) => {
     getAnswers(answers, items[i]); //grab all answers
     getComments(qComments, items[i], "Question Comments"); //grab all comments on the questions
 
+    //append data onto the div to add to the html
     divContent.append(h);
     divContent.appendChild(pContent);
     divContent.appendChild(qComments);
@@ -58,6 +60,7 @@ const getData = (items) => {
   div.appendChild(ul);
 };
 
+//get all the answers to a specific question
 const getAnswers = (answers, json) => {
   for (let j = 0; j < json.answer_count; j++) {
     let header = document.createElement("h6");
@@ -78,6 +81,8 @@ const getAnswers = (answers, json) => {
   }
 };
 
+//gets all the comments on either the 10 most recent questions
+//or the top 10 rated in the last week
 const getComments = (append, json, title) => {
   let h = document.createElement("h4");
   h.innerHTML = title;
@@ -131,9 +136,11 @@ const getResponse = async () => {
 
   deletePrevious(); //delete the previous list items if they exist
 
+  //get the items from the json file to sort
   let recentItems = recentjson.items;
   let votedItems = topVotedjson.items;
 
+  //merge the two lists and sort on creation date
   let finalItems = recentItems.concat(votedItems);
   finalItems.sort(function (a, b) {
     return b.creation_date - a.creation_date;
@@ -142,6 +149,7 @@ const getResponse = async () => {
   getData(finalItems);
 };
 
+//get the current date -6 to convert to our time zone
 const newDate = (seconds) => {
   let time = new Date(1970, 0, 1);
   time.setSeconds(seconds);
