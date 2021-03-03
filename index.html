@@ -13,12 +13,15 @@
   <body>
     <div class="container">
       <h1>Stack Overflow Questions</h1>
-      <form>
+      <form onkeydown="return event.key != 'Enter';">
         <input class="form-control input-margin" type="text" id="tag" placeholder="Tag">
         <input class="btn-primary submit-button" type="button" value="Search" onclick="getResponse()">
       </form>
       <div id="questionListContainer">
         
+      </div>
+      <div id="responseTime">
+
       </div>
     </div>
   </body>

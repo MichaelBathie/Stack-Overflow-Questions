@@ -119,19 +119,25 @@ const deletePrevious = () => {
 };
 
 const getResponse = async () => {
-  const tag = document.getElementById("tag").value;
+  const tag = document.getElementById("tag").value.trim();
   let weekAgo = new Date(Date.now() - 604800000);
   weekAgo = Math.round(weekAgo.getTime() / 1000);
+
+  if (!tag) {
+    badInput();
+    return;
+  }
+
+  let startTime = new Date().getTime();
 
   const topVoted = `https://api.stackexchange.com/2.2/questions?page=1&pagesize=10&fromdate=${weekAgo}&order=desc&sort=votes&tagged=${tag}&site=stackoverflow&filter=!*PBR8nclYi)J1Y.yEkh5DVscPK_BbQgKnuB)FPIQtKjQxarST`;
   let topVotedResponse = await fetch(topVoted);
   let topVotedjson = await topVotedResponse.json();
-  console.log(topVotedjson);
-
   const recent = `https://api.stackexchange.com/2.2/questions?page=1&pagesize=10&fromdate=${weekAgo}&order=desc&sort=creation&tagged=${tag}&site=stackoverflow&filter=!*PBR8nclYi)J1Y.yEkh5DVscPK_BbQgKnuB)FPIQtKjQxarST`;
   let recentResponse = await fetch(recent);
   let recentjson = await recentResponse.json();
-  console.log(recentjson);
+
+  let requestTime = new Date().getTime() - startTime; //time for request
 
   deletePrevious(); //delete the previous list items if they exist
 
@@ -146,6 +152,29 @@ const getResponse = async () => {
   });
 
   getData(finalItems);
+
+  let displayTime = new Date().getTime() - startTime;
+  setResponseTime(requestTime, displayTime);
+};
+
+const badInput = () => {
+  alert("Please input a valid string into the tag field!");
+};
+
+//sets the response time at the bottom of the page
+const setResponseTime = (requestTime, displayTime) => {
+  let div = document.getElementById("responseTime");
+
+  while (div.firstChild) {
+    div.removeChild(div.lastChild);
+  }
+
+  div.appendChild(
+    document.createTextNode(`Request response time: ${requestTime}ms`)
+  );
+  div.appendChild(
+    document.createTextNode(`   ||   Time to display: ${displayTime}ms`)
+  );
 };
 
 //get the current date -6 to convert to our time zone
